@@ -49,7 +49,10 @@ const Habits = () => {
             </div>
             <section className="grid grid-cols-7 bg-neutral-800 rounded-md px-2 py-3">
               {sortedWeekDays.map((day) => (
-                <div className="flex flex-col items-center justify-center last:font-bold">
+                <div
+                  className="flex flex-col items-center justify-center last:font-bold"
+                  key={day}
+                >
                   <span key={day} className="font-sans text-sm text-white">
                     {day}
                   </span>
