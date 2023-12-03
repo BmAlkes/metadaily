@@ -1,8 +1,13 @@
+"use client";
 import { FaRegTrashAlt } from "react-icons/fa";
 import DayState from "../components/dayState";
 import Link from "next/link";
+import { useEffect } from "react";
+import { useSession } from "next-auth/react";
+import { redirect } from "next/navigation";
 
 const Habits = () => {
+  const { data: session } = useSession();
   const habits = {
     "drink water": {
       "2023-11-30": true,
@@ -28,8 +33,14 @@ const Habits = () => {
     .slice(todayWeekDay + 1)
     .concat(weekDays.slice(0, todayWeekDay + 1));
 
+  useEffect(() => {
+    if (!session?.user) {
+      redirect("/");
+    }
+  }, []);
+
   return (
-    <main className="container max-w-[1024px] relative flex flex-col gap-8 px-4 pt-16  mr-auto ml-auto">
+    <main className="container max-w-[1024px] relative flex flex-col gap-8 px-4 pt-16 pb-8  mr-auto ml-auto">
       {habits === null ||
         (Object.keys(habits).length === 0 && (
           <h1 className="mt-20 text-4xl font-light text-white font-display text-center">
