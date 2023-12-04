@@ -8,7 +8,7 @@ const DayState = ({ day }: { day: boolean | undefined }) => {
 
   const [src, alt, size] = image;
   return (
-    <div className="flex items-center justify-center w-9 h-9">
+    <div className="flex items-center justify-center w-9 h-9 cursor-pointer">
       <Image src={src} alt={alt} width={size} height={size} />
     </div>
   );

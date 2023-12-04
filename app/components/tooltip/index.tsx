@@ -10,7 +10,7 @@ const ToolTip = ({ text, children }: { text: string; children: ReactNode }) => {
     >
       {children}
       {isVisible && (
-        <div className="bg-green-500 text-white p-1 rounded-lg absolute top-[-10px] right-[-40px] font-sans">
+        <div className="bg-green-500 text-neutral-900 p-1 rounded-lg absolute top-[-10px] right-[-40px] font-sans">
           {text}
         </div>
       )}

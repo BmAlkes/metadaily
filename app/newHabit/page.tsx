@@ -1,12 +1,26 @@
+"use client";
+import { addDoc, collection } from "firebase/firestore";
 import Link from "next/link";
 import React from "react";
+import { db } from "../services/firebaseConnection";
+import { useSession } from "next-auth/react";
+import { redirect } from "next/navigation";
 
 const NewHabit = () => {
+  const { data: session } = useSession();
   async function newHabit(formData: FormData) {
-    "use server";
-
     const habit = formData.get("habit");
-    console.log(habit);
+    try {
+      await addDoc(collection(db, "habits"), {
+        title: habit,
+        habit: {},
+        created: new Date(),
+        user: session?.user,
+      });
+    } catch (e: any) {
+      console.log("Error" + e.message);
+    }
+    redirect("/habits");
   }
 
   return (

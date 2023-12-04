@@ -25,9 +25,9 @@ const Header = () => {
         <></>
       ) : session ? (
         <div className="flex items-center gap-3">
-          <button className="bg-green-400 text-neutral-900 text-lg cursor-pointer px-4 py-2 rounded-xl uppercase font-sans hover:bg-green-300">
+          <p className="bg-green-400 text-neutral-900 text-sm px-4 py-2 rounded-xl uppercase font-sans hover:bg-green-300">
             Hello {session?.user?.name}
-          </button>
+          </p>
           {session?.user?.image && (
             <ToolTip text="logout">
               <img
