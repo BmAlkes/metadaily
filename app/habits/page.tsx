@@ -29,7 +29,7 @@ interface userProps {
 }
 export type Habits = {
   [habit: string]: Record<string, boolean>;
-} | null;
+};
 
 const Habits = () => {
   const [habits2, setHabits] = useState<HabitsProps[]>([]);

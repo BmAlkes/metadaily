@@ -25,19 +25,17 @@ const currentYear = currentDate.getFullYear();
 const weekDays = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sab"];
 
 type ToggleHabitParams = {
-  habit: string;
   habitStreak: Record<string, boolean> | null;
   date: string | null;
   done?: boolean;
 };
 
 function Calendar({
-  habit,
-  habitStreak,
+  habitStreak = {},
   id,
 }: {
   habit: string | undefined;
-  habitStreak: Record<string, boolean> | null;
+  habitStreak: Record<string, boolean> | undefined;
   id: string;
 }) {
   const [month, setMonth] = useState(currentMonth);
@@ -86,12 +84,7 @@ function Calendar({
       .padStart(2, "0")}`;
   }
 
-  async function toggleHabit({
-    habit,
-    habitStreak,
-    date,
-    done,
-  }: ToggleHabitParams) {
+  async function toggleHabit({ habitStreak, date, done }: ToggleHabitParams) {
     if (!habitStreak || !date) {
       return;
     }
@@ -139,7 +132,6 @@ function Calendar({
             className="flex flex-col items-center p-2 "
             onClick={() =>
               toggleHabit({
-                habit,
                 habitStreak,
                 date: getDayString(day),
                 done: habitStreak ? habitStreak[getDayString(day)] : true,

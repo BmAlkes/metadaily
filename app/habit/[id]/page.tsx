@@ -15,14 +15,14 @@ interface HabitsDetailProps {
 interface HabitProps {
   title: string;
   created: string;
-  habit: object;
+  habit: Record<string, boolean> | undefined;
   user: string;
   taskId: string;
 }
 
 const HabitDetails = ({ params: { id } }: HabitsDetailProps) => {
   const router = useRouter();
-  const [habit, setHabit] = useState<HabitProps>();
+  const [habit, setHabit] = useState<HabitProps | undefined>();
 
   useEffect(() => {
     const loadHabit = async (id: string) => {
@@ -42,9 +42,8 @@ const HabitDetails = ({ params: { id } }: HabitsDetailProps) => {
       setHabit(habit);
     };
     loadHabit(id);
-  }, [habit]);
+  }, []);
 
-  const habitStreak: Record<string, boolean> | undefined = habit?.habit;
   return (
     <main className="container max-w-[1024px] relative flex flex-col gap-8 px-4 pt-16 pb-8  mr-auto ml-auto">
       <h1 className="text-2xl font-light text-center text-white font-display">
@@ -58,7 +57,7 @@ const HabitDetails = ({ params: { id } }: HabitsDetailProps) => {
         Back
       </Link>
 
-      <Calendar habit={habit?.title} habitStreak={habitStreak} id={id} />
+      <Calendar habit={habit?.title} habitStreak={habit?.habit} id={id} />
     </main>
   );
 };
