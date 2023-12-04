@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-const DayState = ({ day }: { day: boolean | string }) => {
+const DayState = ({ day }: { day: boolean | string | undefined }) => {
   let image: [string, string, number?] = ["/Ellipse2.png", "gray mark", 24];
 
   if (day === true) image = ["/Frame.svg", "green mark", 24];

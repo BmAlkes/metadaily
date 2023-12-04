@@ -32,7 +32,7 @@ export type Habits = {
 };
 
 const Habits = () => {
-  const [habits2, setHabits] = useState<HabitsProps[]>([]);
+  const [habits, setHabits] = useState<HabitsProps[]>([]);
   const { data: session } = useSession();
 
   const today = new Date();
@@ -91,14 +91,14 @@ const Habits = () => {
 
   return (
     <main className="container max-w-[1024px] relative flex flex-col gap-8 px-4 pt-16 pb-8  mr-auto ml-auto">
-      {habits2 === null ||
-        (Object.keys(habits2).length === 0 && (
+      {habits === null ||
+        (Object.keys(habits).length === 0 && (
           <h1 className="mt-20 text-4xl font-light text-white font-display text-center">
             You do not have registered habits
           </h1>
         ))}
-      {habits2 !== null &&
-        habits2.map((habit, index) => (
+      {habits !== null &&
+        habits.map((habit) => (
           <div key={habit.id} className="flex flex-col gap-3">
             <div className="flex justify-between items-center">
               <span className="text-white font-light text-xl font-sans">

@@ -25,24 +25,25 @@ const HabitDetails = ({ params: { id } }: HabitsDetailProps) => {
   const [habit, setHabit] = useState<HabitProps | undefined>();
 
   useEffect(() => {
-    const loadHabit = async (id: string) => {
-      const docRef = doc(db, "habits", id);
-      const snapshot = await getDoc(docRef);
-      if (snapshot.data() === undefined) {
-        router.push("/habits");
-      }
-      const miliseconds = snapshot.data()?.created?.seconds * 1000;
-      const habit = {
-        title: snapshot.data()?.title,
-        habit: snapshot.data()?.habit,
-        created: new Date(miliseconds).toLocaleDateString(),
-        user: snapshot.data()?.user,
-        taskId: id,
-      };
-      setHabit(habit);
-    };
     loadHabit(id);
-  }, []);
+  }, [habit]);
+
+  const loadHabit = async (id: string) => {
+    const docRef = doc(db, "habits", id);
+    const snapshot = await getDoc(docRef);
+    if (snapshot.data() === undefined) {
+      router.push("/habits");
+    }
+    const miliseconds = snapshot.data()?.created?.seconds * 1000;
+    const habit = {
+      title: snapshot.data()?.title,
+      habit: snapshot.data()?.habit,
+      created: new Date(miliseconds).toLocaleDateString(),
+      user: snapshot.data()?.user,
+      taskId: id,
+    };
+    setHabit(habit);
+  };
 
   return (
     <main className="container max-w-[1024px] relative flex flex-col gap-8 px-4 pt-16 pb-8  mr-auto ml-auto">
