@@ -57,7 +57,10 @@ const Header = () => {
                     Track Tasks
                   </Link>
                 </DropdownMenuItem>
-                <button className="w-full bg-green-500 text-white rounded-md">
+                <button
+                  className="w-full bg-green-500 text-white rounded-md"
+                  onClick={() => signOut()}
+                >
                   Logout
                 </button>
               </DropdownMenuContent>
