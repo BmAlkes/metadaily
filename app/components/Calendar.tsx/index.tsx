@@ -4,7 +4,7 @@ import ArrowIcon from "../ArrowIcon";
 import DayState from "../dayState";
 import { revalidatePath } from "next/cache";
 import { db } from "@/app/services/firebaseConnection";
-import { doc, setDoc, updateDoc } from "firebase/firestore";
+import { doc, onSnapshot, setDoc, updateDoc } from "firebase/firestore";
 
 function getDaysInMonth(month: number, year: number) {
   const date = new Date(year, month, 1);

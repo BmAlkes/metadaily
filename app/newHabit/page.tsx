@@ -10,6 +10,7 @@ const NewHabit = () => {
   const { data: session } = useSession();
   async function newHabit(formData: FormData) {
     const habit = formData.get("habit");
+    const day = new Date().getDay().toString();
     try {
       await addDoc(collection(db, "habits"), {
         title: habit,

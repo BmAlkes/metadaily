@@ -15,6 +15,7 @@ import {
   where,
 } from "firebase/firestore";
 import { db } from "../services/firebaseConnection";
+import { ScrollArea } from "@/components/ui/scroll-area";
 interface HabitsProps {
   id: string;
   title: string;
@@ -100,38 +101,43 @@ const Habits = () => {
             You do not have registered habits
           </h1>
         ))}
-      <div className=" p-2 overflow-y-auto mb-12">
-        {habits !== null &&
-          habits.map((habit) => (
-            <div key={habit.id} className="flex flex-col gap-3  ">
-              <div className="flex justify-between items-center">
-                <span className="text-white font-light text-xl font-sans">
-                  {habit.title}
-                </span>
-                <button onClick={() => handleDelete(habit.id)}>
-                  <FaRegTrashAlt size={26} color="#bf4242" />
-                </button>
+      <ScrollArea className="h-full w-full">
+        <div className=" p-2 overflow-y-auto mb-12">
+          {habits !== null &&
+            habits.map((habit) => (
+              <div key={habit.id} className="flex flex-col gap-3  ">
+                <div className="flex justify-between items-center">
+                  <span className="text-white font-light text-xl font-sans">
+                    {habit.title}
+                  </span>
+                  <button onClick={() => handleDelete(habit.id)}>
+                    <FaRegTrashAlt size={26} color="#bf4242" />
+                  </button>
+                </div>
+                <Link href={`/habit/${habit.id}`}>
+                  <section className="grid grid-cols-7 bg-neutral-800 rounded-md px-2 py-3">
+                    {sortedWeekDays.map((day, index) => (
+                      <div
+                        className="flex flex-col items-center justify-center last:font-bold"
+                        key={day}
+                      >
+                        <span
+                          key={day}
+                          className="font-sans text-sm text-white"
+                        >
+                          {day}
+                        </span>
+                        {habit.daysHabit && (
+                          <DayState day={habit.daysHabit[last7Days[index]]} />
+                        )}
+                      </div>
+                    ))}
+                  </section>
+                </Link>
               </div>
-              <Link href={`/habit/${habit.id}`}>
-                <section className="grid grid-cols-7 bg-neutral-800 rounded-md px-2 py-3">
-                  {sortedWeekDays.map((day, index) => (
-                    <div
-                      className="flex flex-col items-center justify-center last:font-bold"
-                      key={day}
-                    >
-                      <span key={day} className="font-sans text-sm text-white">
-                        {day}
-                      </span>
-                      {habit.daysHabit && (
-                        <DayState day={habit.daysHabit[last7Days[index]]} />
-                      )}
-                    </div>
-                  ))}
-                </section>
-              </Link>
-            </div>
-          ))}
-      </div>
+            ))}
+        </div>
+      </ScrollArea>
       <Link
         href="newHabit"
         className="w-2/3 text-center fixed bottom-10 left-1/2 -translate-x-1/2 text-neutral-900 bg-green-500 font-display font-regular text-2xl p-2 hover:bg-green-300 rounded-lg max-w-[1024px]"
