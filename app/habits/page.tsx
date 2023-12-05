@@ -28,7 +28,7 @@ interface userProps {
   name: string;
 }
 export type Habits = {
-  [habit: string]: (Record<string, boolean> & boolean) | string | undefined;
+  [habit: string]: (Record<string, boolean> & undefined) | boolean | string;
 };
 
 const Habits = () => {
@@ -122,7 +122,9 @@ const Habits = () => {
                       <span key={day} className="font-sans text-sm text-white">
                         {day}
                       </span>
-                      <DayState day={habit.daysHabit[last7Days[index]]} />;
+                      {habit.daysHabit && (
+                        <DayState day={habit.daysHabit[last7Days[index]]} />
+                      )}
                     </div>
                   ))}
                 </section>
