@@ -1,8 +1,49 @@
+"use client";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import styles from "./styles.module.css";
+import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
 
 const Tracker = () => {
+  const [task, setTask] = useState([
+    {
+      id: "0",
+      hour: "10:00",
+      program: "Work on Project",
+      what: "didnt have time",
+      clarifying: "Get out for super",
+      complete: false,
+    },
+    {
+      id: "1",
+      hour: "11:00",
+      program: "Work on Project2",
+      what: "complete",
+      clarifying: "",
+      complete: true,
+    },
+    {
+      id: "2",
+      hour: "12:00",
+      program: "Work on Project2",
+      what: "didnt have time",
+      clarifying: "Lunch time",
+      complete: false,
+    },
+  ]);
+  function reorder<T>(list: T[], startIndex: number, endIndex: number) {
+    const result = Array.from(list);
+    const [removed] = result.splice(startIndex, 1);
+    result.splice(endIndex, 0, removed);
+    return result;
+  }
+  const onDragEnd = (result: any) => {
+    if (!result.destination) {
+      return;
+    }
+    const items = reorder(task, result.source.index, result.destination.index);
+    setTask(items);
+  };
   return (
     <main className="container max-w-[1024px]   flex flex-col gap-8 px-4 pt-16 pb-8  mr-auto ml-auto ">
       <h1 className="mt-5 text-3xl font-light text-white font-display text-center">
@@ -18,59 +59,51 @@ const Tracker = () => {
             <th scope="col">Complete</th>
           </tr>
         </thead>
-        <tbody id="body">
-          <tr className={styles.tr}>
-            <td className={styles.tdLabel} data-label="teste1">
-              teste 1
-            </td>
-            <td className={styles.tdLabel} data-label="teste2">
-              teste 2
-            </td>
-            <td className={styles.tdLabel} data-label="teste3">
-              teste 3
-            </td>
-            <td className={styles.tdLabel} data-label="teste4">
-              teste 4
-            </td>
-            <td className={styles.tdLabel} data-label="teste5">
-              <input type="checkbox" />
-            </td>
-          </tr>
-          <tr className={styles.tr}>
-            <td className={styles.tdLabel} data-label="teste1">
-              teste 1
-            </td>
-            <td className={styles.tdLabel} data-label="teste2">
-              teste 2
-            </td>
-            <td className={styles.tdLabel} data-label="teste3">
-              teste 3
-            </td>
-            <td className={styles.tdLabel} data-label="teste4">
-              teste 4
-            </td>
-            <td className={styles.tdLabel} data-label="teste5">
-              <input type="checkbox" />
-            </td>
-          </tr>
-          <tr className={styles.tr}>
-            <td className={styles.tdLabel} data-label="teste1">
-              teste 1
-            </td>
-            <td className={styles.tdLabel} data-label="teste2">
-              teste 2
-            </td>
-            <td className={styles.tdLabel} data-label="teste3">
-              teste 3
-            </td>
-            <td className={styles.tdLabel} data-label="teste4">
-              teste 4
-            </td>
-            <td className={styles.tdLabel} data-label="teste5">
-              <input type="checkbox" />
-            </td>
-          </tr>
-        </tbody>
+        <DragDropContext onDragEnd={onDragEnd}>
+          <Droppable droppableId="tasks" type="list" direction="vertical">
+            {(provided) => (
+              <tbody
+                id="body"
+                ref={provided.innerRef}
+                {...provided.droppableProps}
+              >
+                {task.map((item, index) => (
+                  <Draggable draggableId={item.id} index={index}>
+                    {(provided) => (
+                      <tr
+                        className={styles.tr}
+                        key={item.id}
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                        ref={provided.innerRef}
+                      >
+                        <td className={styles.tdLabel} data-label="Hour">
+                          {item.hour}
+                        </td>
+                        <td className={styles.tdLabel} data-label="Program">
+                          {item.program}
+                        </td>
+                        <td
+                          className={styles.tdLabel}
+                          data-label="Whats actually happened"
+                        >
+                          {item.what}
+                        </td>
+                        <td className={styles.tdLabel} data-label="clarifying">
+                          {item.clarifying}
+                        </td>
+                        <td className={styles.tdLabel} data-label="complete">
+                          <input type="checkbox" checked={item.complete} />
+                        </td>
+                      </tr>
+                    )}
+                  </Draggable>
+                ))}
+                {provided.placeholder}
+              </tbody>
+            )}
+          </Droppable>
+        </DragDropContext>
       </table>
       <Link
         href="/"
