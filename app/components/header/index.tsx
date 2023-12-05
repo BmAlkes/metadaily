@@ -4,6 +4,15 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import ToolTip from "../tooltip";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const Header = () => {
   const { data: session, status } = useSession();
@@ -25,17 +34,34 @@ const Header = () => {
         <></>
       ) : session ? (
         <div className="flex items-center gap-3">
-          <p className="bg-green-400 text-neutral-900 text-sm px-4 py-2 rounded-xl uppercase font-sans hover:bg-green-300">
-            Hello {session?.user?.name}
-          </p>
           {session?.user?.image && (
-            <ToolTip text="logout">
-              <img
-                src={session?.user?.image}
-                onClick={() => signOut()}
-                className="rounded-full max-w-[60px] cursor-pointer"
-              />
-            </ToolTip>
+            <DropdownMenu>
+              <DropdownMenuTrigger>
+                <Avatar>
+                  <AvatarImage src={session.user.image} />
+                  <AvatarFallback>CN</AvatarFallback>
+                </Avatar>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuLabel>
+                  <h2>Welcome {session.user.name}</h2>
+                </DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem className="hover:bg-green-300 w-full">
+                  <Link href="/habits" className="text-base ">
+                    Habit
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem className="hover:bg-green-300 w-ful mb-3">
+                  <Link href="/tracks" className="text-base">
+                    Track Tasks
+                  </Link>
+                </DropdownMenuItem>
+                <button className="w-full bg-green-500 text-white rounded-md">
+                  Logout
+                </button>
+              </DropdownMenuContent>
+            </DropdownMenu>
           )}
         </div>
       ) : (
