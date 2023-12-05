@@ -68,11 +68,10 @@ const Tracker = () => {
                 {...provided.droppableProps}
               >
                 {task.map((item, index) => (
-                  <Draggable draggableId={item.id} index={index}>
+                  <Draggable draggableId={item.id} index={index} key={item.id}>
                     {(provided) => (
                       <tr
                         className={styles.tr}
-                        key={item.id}
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}
                         ref={provided.innerRef}
