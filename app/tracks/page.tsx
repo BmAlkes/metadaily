@@ -3,6 +3,18 @@ import Link from "next/link";
 import React, { useState } from "react";
 import styles from "./styles.module.css";
 import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
+import { MdDeleteOutline } from "react-icons/md";
+import { FaRegEdit } from "react-icons/fa";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Label } from "@radix-ui/react-dropdown-menu";
 
 const Tracker = () => {
   const [task, setTask] = useState([
@@ -56,7 +68,7 @@ const Tracker = () => {
             <th scope="col">Program</th>
             <th scope="col">What actually happened</th>
             <th scope="col">Clarifying</th>
-            <th scope="col">Complete</th>
+            <th scope="col">#</th>
           </tr>
         </thead>
         <DragDropContext onDragEnd={onDragEnd}>
@@ -92,7 +104,18 @@ const Tracker = () => {
                           {item.clarifying}
                         </td>
                         <td className={styles.tdLabel} data-label="complete">
-                          <input type="checkbox" checked={item.complete} />
+                          <button
+                            className="action"
+                            style={{ backgroundColor: "#f63535" }}
+                          >
+                            <MdDeleteOutline color="#fff" size={25} />
+                          </button>
+                          <button
+                            className="action"
+                            style={{ backgroundColor: "#353bf6" }}
+                          >
+                            <FaRegEdit color="#fff" size={25} />
+                          </button>
                         </td>
                       </tr>
                     )}
@@ -107,9 +130,68 @@ const Tracker = () => {
       <Link
         href="/"
         className="w-2/3 text-center fixed bottom-10 left-1/2 -translate-x-1/2 text-neutral-900 bg-green-500 font-display font-regular text-2xl p-2 hover:bg-green-300 rounded-lg max-w-[1024px]"
-      >
-        <button>New Tasks</button>
-      </Link>
+      ></Link>
+
+      <Dialog>
+        <DialogTrigger asChild>
+          <button className="w-2/3 text-center fixed bottom-10 left-1/2 -translate-x-1/2 text-neutral-900 bg-green-500 font-display font-regular text-2xl p-2 hover:bg-green-300 rounded-lg max-w-[1024px]">
+            New Tasks
+          </button>
+        </DialogTrigger>
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle>Create New Task</DialogTitle>
+            <DialogDescription>
+              Make changes to your tasks here. Click save when you're done.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="grid gap-4 py-4">
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="name" className="text-right">
+                Hour
+              </Label>
+              <input id="name" type="time" className="col-span-3" />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="username" className="text-right">
+                Program
+              </Label>
+              <input
+                id="username"
+                type="text"
+                placeholder="Inform the task"
+                className="col-span-3"
+              />
+            </div>
+
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="username" className="text-right">
+                Clarifying
+              </Label>
+              <input
+                id="username"
+                type="text"
+                placeholder="Clarifyng"
+                className="col-span-3"
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="username" className="text-right">
+                What Actually Happened
+              </Label>
+              <textarea
+                className="col-span-3 resize-none"
+                placeholder="..."
+              ></textarea>
+            </div>
+          </div>
+          <DialogFooter>
+            <button className="border-2 p-2 rounded-md" type="submit">
+              Save changes
+            </button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </main>
   );
 };

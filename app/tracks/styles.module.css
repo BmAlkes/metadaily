@@ -37,6 +37,14 @@
   padding: 14px;
   text-align: center;
 }
+.table td button {
+  border: none;
+  padding: 2px;
+  border-radius: 8px;
+}
+.table td button:first-child {
+  margin-right: 10px;
+}
 
 @media screen and (max-width: 600px) {
   .table {
