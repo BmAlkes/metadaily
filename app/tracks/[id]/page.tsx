@@ -1,4 +1,5 @@
 "use client";
+import { db } from "@/app/services/firebaseConnection";
 import {
   Card,
   CardContent,
@@ -8,7 +9,10 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Label } from "@radix-ui/react-dropdown-menu";
+import { doc, getDoc } from "firebase/firestore";
 import Link from "next/link";
+import router from "next/router";
+import { useEffect, useState } from "react";
 
 interface EditTask {
   params: {
@@ -17,6 +21,28 @@ interface EditTask {
 }
 
 const editTask = ({ params: { id } }: EditTask) => {
+  const [task, setTasks] = useState();
+
+  // useEffect(() => {
+  //   loadHabit(id);
+  // }, []);
+
+  // const loadTask = async (id: string) => {
+  //   const docRef = doc(db, "tasks", id);
+  //   const snapshot = await getDoc(docRef);
+  //   if (snapshot.data() === undefined) {
+  //     router.push("/tracks");
+  //   }
+
+  //   const Tasks = {
+  //     title: snapshot.data()?.title,
+  //     habit: snapshot.data()?.habit,
+  //     user: snapshot.data()?.user,
+  //     taskId: id,
+  //   };
+  //   setTasks(Tasks);
+  // };
+
   return (
     <main className="container max-w-[1024px]   flex flex-col gap-8 px-4 pt-16 pb-8  mr-auto ml-auto ">
       <Card className=" w-full max-w-[850px] mr-auto ml-auto ">
