@@ -21,7 +21,7 @@ interface EditTask {
 }
 
 const editTask = ({ params: { id } }: EditTask) => {
-  const [task, setTasks] = useState();
+  // const [task, setTasks] = useState();
 
   // useEffect(() => {
   //   loadHabit(id);
