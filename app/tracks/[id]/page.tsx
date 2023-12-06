@@ -28,19 +28,31 @@ const editTask = ({ params: { id } }: EditTask) => {
           <form>
             <div className="grid w-full items-center gap-4">
               <div className="flex flex-col space-y-1.5">
-                <Label htmlFor="name">Name</Label>
-                <input id="name" placeholder="Name of your project" />
+                <Label>Time</Label>
+                <input type="time" />
+              </div>
+              <div className="flex flex-col space-y-1.5">
+                <Label>Program</Label>
+                <input type="text" placeholder="Program..." />
+              </div>
+              <div className="flex flex-col space-y-1.5">
+                <Label>Whats Actually Happen</Label>
+                <input type="text" placeholder="Whats Actually Happen" />
+              </div>
+              <div className="flex flex-col space-y-1.5">
+                <Label>Clarifying</Label>
+                <input type="text" placeholder="Clarifying" />
               </div>
             </div>
           </form>
         </CardContent>
         <CardFooter className="flex justify-between">
           <Link href="/tracks">
-            <button className="border-2 text-white py-2 px-7 rounded-md bg-red-500">
+            <button className="border-2 text-white py-2 px-7 rounded-md bg-red-500 hover:bg-red-300">
               Cancel
             </button>
           </Link>
-          <button className="border-2 text-white py-2 px-7 rounded-md bg-green-500">
+          <button className="border-2 text-white py-2 px-7 rounded-md bg-green-500 hover:bg-green-300">
             Save Edit
           </button>
         </CardFooter>
