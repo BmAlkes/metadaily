@@ -147,15 +147,11 @@ const Tracker = () => {
           </DialogHeader>
           <div className="grid gap-4 py-4">
             <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="name" className="text-right">
-                Hour
-              </Label>
+              <Label className="text-right">Hour</Label>
               <input id="name" type="time" className="col-span-3" />
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="username" className="text-right">
-                Program
-              </Label>
+              <Label className="text-right">Program</Label>
               <input
                 id="username"
                 type="text"
@@ -165,9 +161,7 @@ const Tracker = () => {
             </div>
 
             <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="username" className="text-right">
-                Clarifying
-              </Label>
+              <Label className="text-right">Clarifying</Label>
               <input
                 id="username"
                 type="text"
@@ -176,9 +170,7 @@ const Tracker = () => {
               />
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="username" className="text-right">
-                What Actually Happened
-              </Label>
+              <Label className="text-right">What Actually Happened</Label>
               <textarea
                 className="col-span-3 resize-none"
                 placeholder="..."
