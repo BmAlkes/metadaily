@@ -142,7 +142,7 @@ const Tracker = () => {
           <DialogHeader>
             <DialogTitle>Create New Task</DialogTitle>
             <DialogDescription>
-              Make changes to your tasks here. Click save when you're done.
+              Make changes to your tasks here. Click save when you re done.
             </DialogDescription>
           </DialogHeader>
           <div className="grid gap-4 py-4">
