@@ -56,6 +56,11 @@ const Header = () => {
                     Track Tasks
                   </Link>
                 </DropdownMenuItem>
+                <DropdownMenuItem className="hover:bg-green-300 w-ful mb-3">
+                  <Link href="/watch" className="text-base">
+                    Stop Watch / Report
+                  </Link>
+                </DropdownMenuItem>
                 <button
                   className="w-full bg-green-500 text-white rounded-md"
                   onClick={() => signOut()}
