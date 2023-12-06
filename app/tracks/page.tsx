@@ -29,6 +29,7 @@ import {
 import { db } from "../services/firebaseConnection";
 import { useSession } from "next-auth/react";
 import ButtonRegister from "../components/buttonRegister";
+import { redirect } from "next/navigation";
 
 interface TasksProps {
   id: string;
@@ -50,6 +51,10 @@ const Tracker = () => {
   const { data: session } = useSession();
 
   useEffect(() => {
+    if (!session?.user) {
+      redirect("/");
+    }
+
     async function loadTasks() {
       const taskRef = collection(db, "tasks");
       const q = query(
@@ -95,9 +100,7 @@ const Tracker = () => {
     const docRef = doc(db, "tasks", id);
     await deleteDoc(docRef);
   };
-  const handleEdit = async (id: string) => {
-    console.log(id);
-  };
+
   return (
     <main className="container max-w-[1024px]   flex flex-col gap-8 px-4 pt-16 pb-8  mr-auto ml-auto ">
       <h1 className="mt-5 text-3xl font-light text-white font-display text-center">
@@ -174,13 +177,14 @@ const Tracker = () => {
                               >
                                 <MdDeleteOutline color="#fff" size={25} />
                               </button>
-                              <button
-                                onClick={() => handleEdit(item.id)}
-                                className="action"
-                                style={{ backgroundColor: "#353bf6" }}
-                              >
-                                <FaRegEdit color="#fff" size={25} />
-                              </button>
+                              <Link href={`/tracks/${item.id}`}>
+                                <button
+                                  className="action"
+                                  style={{ backgroundColor: "#353bf6" }}
+                                >
+                                  <FaRegEdit color="#fff" size={25} />
+                                </button>
+                              </Link>
                             </td>
                           </tr>
                         )}

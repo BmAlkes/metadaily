@@ -88,7 +88,6 @@ const Habits = () => {
     const docRef = doc(db, "habits", id);
     await deleteDoc(docRef);
   };
-  console.log(habits);
 
   return (
     <main className="container max-w-[1024px]   flex flex-col gap-8 px-4 pt-16 pb-8  mr-auto ml-auto ">
