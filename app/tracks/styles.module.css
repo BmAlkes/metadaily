@@ -69,6 +69,7 @@
     display: block !important;
     font-size: 14px;
     text-align: right;
+    min-height: 40px;
   }
   .table td:last-child {
     border-bottom: 0;

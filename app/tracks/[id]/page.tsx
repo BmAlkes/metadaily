@@ -9,7 +9,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Label } from "@radix-ui/react-dropdown-menu";
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
 import Link from "next/link";
 import router from "next/router";
 import { useEffect, useState } from "react";
@@ -21,27 +21,56 @@ interface EditTask {
 }
 
 const editTask = ({ params: { id } }: EditTask) => {
-  // const [task, setTasks] = useState();
+  const [time, setTime] = useState("");
+  const [program, setProgram] = useState("");
+  const [what, setWhat] = useState("");
+  const [clarifying, setClarifying] = useState("");
 
-  // useEffect(() => {
-  //   loadHabit(id);
-  // }, []);
+  useEffect(() => {
+    loadHabit(id);
+  }, []);
 
-  // const loadTask = async (id: string) => {
-  //   const docRef = doc(db, "tasks", id);
-  //   const snapshot = await getDoc(docRef);
-  //   if (snapshot.data() === undefined) {
-  //     router.push("/tracks");
-  //   }
+  const loadHabit = async (id: string) => {
+    const docRef = doc(db, "tasks", id);
+    const snapshot = await getDoc(docRef);
+    if (snapshot.data() === undefined) {
+      router.push("/tracks");
+    }
 
-  //   const Tasks = {
-  //     title: snapshot.data()?.title,
-  //     habit: snapshot.data()?.habit,
-  //     user: snapshot.data()?.user,
-  //     taskId: id,
-  //   };
-  //   setTasks(Tasks);
-  // };
+    const databaseTask = {
+      clarifying: snapshot.data()?.clarifying,
+      created: snapshot.data()?.created,
+      user: snapshot.data()?.user,
+      program: snapshot.data()?.program,
+      time: snapshot.data()?.time,
+      what: snapshot.data()?.whats,
+      id: id,
+    };
+    setTime(databaseTask.time);
+    setProgram(databaseTask.program);
+    setClarifying(databaseTask.clarifying);
+    setWhat(databaseTask.what);
+  };
+
+  const handleUpdate = async () => {
+    "use client";
+    const updateTask = {
+      time: time,
+      program: program,
+      whats: what,
+      clarifying: clarifying,
+    };
+    const updateRef = doc(db, "tasks", id);
+    await updateDoc(updateRef, updateTask)
+      .then(() => {})
+      .catch((e) => {
+        console.log(e);
+      });
+    setTime("");
+    setProgram("");
+    setClarifying("");
+    setWhat("");
+  };
 
   return (
     <main className="container max-w-[1024px]   flex flex-col gap-8 px-4 pt-16 pb-8  mr-auto ml-auto ">
@@ -55,19 +84,39 @@ const editTask = ({ params: { id } }: EditTask) => {
             <div className="grid w-full items-center gap-4">
               <div className="flex flex-col space-y-1.5">
                 <Label>Time</Label>
-                <input type="time" />
+
+                <input
+                  type="time"
+                  onChange={(e) => setTime(e.target.value)}
+                  value={time}
+                />
               </div>
               <div className="flex flex-col space-y-1.5">
                 <Label>Program</Label>
-                <input type="text" placeholder="Program..." />
+                <input
+                  type="text"
+                  placeholder="Program..."
+                  onChange={(e) => setProgram(e.target.value)}
+                  value={program}
+                />
               </div>
               <div className="flex flex-col space-y-1.5">
                 <Label>Whats Actually Happen</Label>
-                <input type="text" placeholder="Whats Actually Happen" />
+                <input
+                  type="text"
+                  placeholder="Whats Actually Happen"
+                  onChange={(e) => setWhat(e.target.value)}
+                  value={what}
+                />
               </div>
               <div className="flex flex-col space-y-1.5">
                 <Label>Clarifying</Label>
-                <input type="text" placeholder="Clarifying" />
+                <input
+                  type="text"
+                  placeholder="Clarifying"
+                  onChange={(e) => setClarifying(e.target.value)}
+                  value={clarifying}
+                />
               </div>
             </div>
           </form>
@@ -75,12 +124,17 @@ const editTask = ({ params: { id } }: EditTask) => {
         <CardFooter className="flex justify-between">
           <Link href="/tracks">
             <button className="border-2 text-white py-2 px-7 rounded-md bg-red-500 hover:bg-red-300">
-              Cancel
+              Back to Track Page
             </button>
           </Link>
-          <button className="border-2 text-white py-2 px-7 rounded-md bg-green-500 hover:bg-green-300">
-            Save Edit
-          </button>
+          <Link href="/tracks">
+            <button
+              className="border-2 text-white py-2 px-7 rounded-md bg-green-500 hover:bg-green-300"
+              onClick={handleUpdate}
+            >
+              Save Edit
+            </button>
+          </Link>
         </CardFooter>
       </Card>
     </main>

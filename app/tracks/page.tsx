@@ -5,19 +5,9 @@ import styles from "./styles.module.css";
 import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
 import { MdDeleteOutline } from "react-icons/md";
 import { FaRegEdit } from "react-icons/fa";
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+
 import { Label } from "@radix-ui/react-dropdown-menu";
 import {
-  addDoc,
   collection,
   deleteDoc,
   doc,
@@ -80,7 +70,6 @@ const Tracker = () => {
     }
     loadTasks();
   }, [session?.user?.email]);
-  console.log(tasks);
 
   function reorder<T>(list: T[], startIndex: number, endIndex: number) {
     const result = Array.from(list);
