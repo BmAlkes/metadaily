@@ -6,7 +6,6 @@ import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
 import { MdDeleteOutline } from "react-icons/md";
 import { FaRegEdit } from "react-icons/fa";
 
-import { Label } from "@radix-ui/react-dropdown-menu";
 import {
   collection,
   deleteDoc,

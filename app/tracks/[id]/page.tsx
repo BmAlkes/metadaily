@@ -20,7 +20,7 @@ interface EditTask {
   };
 }
 
-const editTask = ({ params: { id } }: EditTask) => {
+const EditTask = ({ params: { id } }: EditTask) => {
   const [time, setTime] = useState("");
   const [program, setProgram] = useState("");
   const [what, setWhat] = useState("");
@@ -141,4 +141,4 @@ const editTask = ({ params: { id } }: EditTask) => {
   );
 };
 
-export default editTask;
+export default EditTask;
