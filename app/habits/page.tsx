@@ -90,7 +90,7 @@ const Habits = () => {
   };
 
   return (
-    <main className="container max-w-[1024px]   flex flex-col gap-8 px-4 pt-16 pb-8  mr-auto ml-auto ">
+    <main className="container max-w-[1024px]  flex flex-col gap-8 px-4 pt-10 pb-8  mr-auto ml-auto ">
       <h1 className="mt-5 text-3xl font-light text-white font-display text-center">
         Habits
       </h1>

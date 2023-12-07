@@ -73,7 +73,7 @@ const EditTask = ({ params: { id } }: EditTask) => {
   };
 
   return (
-    <main className="container max-w-[1024px]   flex flex-col gap-8 px-4 pt-16 pb-8  mr-auto ml-auto ">
+    <main className="container max-w-[1024px]   flex flex-col gap-8 px-4 pt-10 pb-8  mr-auto ml-auto ">
       <Card className=" w-full max-w-[850px] mr-auto ml-auto ">
         <CardHeader>
           <CardTitle>Edit Task</CardTitle>

@@ -25,7 +25,7 @@ const NewHabit = () => {
   }
 
   return (
-    <main className="container ralative flex flex-col gap-8 max-w-[1024px] mr-auto ml-auto px-12 pt-16">
+    <main className="container ralative flex flex-col gap-8 max-w-[1024px] mr-auto ml-auto px-12 pt-10">
       <h1 className="text-center font-light text-4xl text-white font-display">
         New Habit
       </h1>
