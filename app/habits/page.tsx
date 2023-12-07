@@ -104,7 +104,7 @@ const Habits = () => {
         <div className=" p-2 overflow-y-auto mb-12">
           {habits !== null &&
             habits.map((habit) => (
-              <div key={habit.id} className="flex flex-col gap-3  ">
+              <div key={habit.id} className="flex flex-col gap-1 mt-6 ">
                 <div className="flex justify-between items-center">
                   <span className="text-white font-light text-xl font-sans">
                     {habit.title}
