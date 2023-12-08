@@ -3,7 +3,7 @@ import React from "react";
 
 const Watch = () => {
   return (
-    <main className="container max-w-[1024px] flex flex-col gap-8 px-4 pt-16 pb-8 mr-auto ml-auto ">
+    <main className="container max-w-[1024px] flex flex-col gap-8 px-6 pt-16 pb-8 mr-auto ml-auto ">
       <div className="flex justify-between items-center">
         <h2 className="mt-5 text-3xl font-light text-white font-display text-center">
           Stop Watch
@@ -27,7 +27,7 @@ const Watch = () => {
             <input type="number" id="minutesAmount" />
             <span>minutes.</span>
           </div>
-          <div className="w-full flex items-center justify-center text-7xl gap-3">
+          <div className="w-full flex items-center justify-center text-7xl gap-3 ">
             <span className="bg-gray-500 text-white p-4 rounded-xl">0</span>
             <span className="bg-gray-500 text-white p-4 rounded-xl">0</span>
             <span className="bg-gray-500 text-white p-4 rounded-xl">:</span>
