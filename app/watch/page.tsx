@@ -27,7 +27,7 @@ const Watch = () => {
             <input type="number" id="minutesAmount" />
             <span>minutes.</span>
           </div>
-          <div className="w-full flex items-center justify-center text-7xl gap-3 ">
+          <div className="w-full flex items-center justify-center lg:text-9xl text-5xl gap-3 ">
             <span className="bg-gray-500 text-white p-4 rounded-xl">0</span>
             <span className="bg-gray-500 text-white p-4 rounded-xl">0</span>
             <span className="bg-gray-500 text-white p-4 rounded-xl">:</span>
