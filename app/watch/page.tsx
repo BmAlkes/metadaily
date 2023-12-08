@@ -27,16 +27,16 @@ const Watch = () => {
             <input type="number" id="minutesAmount" />
             <span>minutes.</span>
           </div>
-          <div className="w-full text-9xl flex gap-4">
-            <span className="bg-gray-500 text-white p-6 rounded-xl">0</span>
-            <span className="bg-gray-500 text-white p-6 rounded-xl">0</span>
-            <span className="bg-gray-500 text-white p-6 rounded-xl">:</span>
-            <span className="bg-gray-500 text-white p-6 rounded-xl">0</span>
-            <span className="bg-gray-500 text-white p-6 rounded-xl">0</span>
+          <div className="w-full flex items-center justify-center text-7xl gap-3">
+            <span className="bg-gray-500 text-white p-4 rounded-xl">0</span>
+            <span className="bg-gray-500 text-white p-4 rounded-xl">0</span>
+            <span className="bg-gray-500 text-white p-4 rounded-xl">:</span>
+            <span className="bg-gray-500 text-white p-4 rounded-xl">0</span>
+            <span className="bg-gray-500 text-white p-4 rounded-xl">0</span>
           </div>
           <button
             type="submit"
-            className="w-full  bottom-10  text-white bg-green-500 font-display font-regular text-2xl p-2 hover:bg-green-300 rounded-lg max-w-[1024px] flex items-center justify-center gap-3 "
+            className="w-full  bottom-10  text-white bg-green-500 font-display font-regular text-2xl p-2 hover:bg-green-300 rounded-lg  flex items-center justify-center gap-3 "
           >
             <PlayCircleIcon size={25} /> Start
           </button>
