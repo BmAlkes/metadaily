@@ -24,26 +24,40 @@ const Watch = () => {
             <input
               type="text"
               id="task"
-              className=" bg-transparent border-b-[2px] border-gray-500 h-10 font-bold px-2 fle-1 placeholder:text-center focus:border-green-500"
+              className=" bg-transparent border-b-[2px] border-gray-500 h-10 font-bold px-2 fle-1 placeholder:text-center focus:border-green-500 "
               placeholder="Type your project"
+              list="task-sugesstions"
             />
-
+            <datalist id="task-sugesstions">
+              <option value="Project 1" />
+              <option value="Project 3" />
+              <option value="Project banana" />
+            </datalist>
             <label htmlFor="minutesAmount">during</label>
             <input
               type="number"
               id="minutesAmount"
-              max="60"
-              min="5"
+              max={60}
+              step={5}
+              min={5}
               className=" bg-transparent w-16 border-b-[2px] border-gray-500 h-10 font-bold px-2 "
             />
             <span>minutes.</span>
           </div>
           <div className="w-full flex items-center justify-center lg:text-9xl text-5xl gap-3 ">
-            <span className="bg-gray-500 text-white p-4 rounded-xl">0</span>
-            <span className="bg-gray-500 text-white p-4 rounded-xl">0</span>
+            <span className="bg-gray-500 text-neutral-950 p-4 rounded-xl">
+              0
+            </span>
+            <span className="bg-gray-500 text-neutral-950  p-4 rounded-xl">
+              0
+            </span>
             <span className="text-green-500 ">:</span>
-            <span className="bg-gray-500 text-white p-4 rounded-xl">0</span>
-            <span className="bg-gray-500 text-white p-4 rounded-xl">0</span>
+            <span className="bg-gray-500 text-neutral-950  p-4 rounded-xl">
+              0
+            </span>
+            <span className="bg-gray-500 text-neutral-950 p-4 rounded-xl">
+              0
+            </span>
           </div>
           <button
             type="submit"
