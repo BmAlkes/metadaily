@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as zod from "zod";
-import React from "react";
+import React, { useState } from "react";
 
 const newCycleSchema = zod.object({
   task: zod.string().min(1, "Inform the task"),
@@ -19,14 +19,49 @@ interface NewCycleFormData {
   minutesAmount: number;
 }
 
+interface Cycle {
+  id: string;
+  cicle: string;
+  minutesAmount: number;
+  day: string;
+}
 const Watch = () => {
-  const { handleSubmit, register } = useForm<NewCycleFormData>({
+  const [cycle, setCycles] = useState<Cycle[]>([]);
+  const [activeCycleId, setActiveCycleId] = useState<string | null>(null);
+  const [amountSecondsPassed, setAmountSecondsPassed] = useState(0);
+
+  const { handleSubmit, register, reset } = useForm({
     resolver: zodResolver(newCycleSchema),
+    defaultValues: {
+      task: "",
+      minutesAmount: 0,
+    },
   });
 
   const handleCreateNewCycle = (data: NewCycleFormData) => {
-    console.log(data.task);
+    const date = new Date();
+    const id = String(new Date().getTime());
+    const newCycle: Cycle = {
+      id,
+      cicle: data.task,
+      minutesAmount: data.minutesAmount,
+      day: `${date.toLocaleDateString()}`,
+    };
+    setCycles((state) => [...state, newCycle]);
+    setActiveCycleId(id);
+    reset();
   };
+
+  const activeCycles = cycle.find((cycle) => cycle.id === activeCycleId);
+
+  const totalSeconds = activeCycles ? activeCycles.minutesAmount * 60 : 0;
+  const currentSeconds = activeCycles ? totalSeconds - amountSecondsPassed : 0;
+
+  const minutesAmount = Math.floor(currentSeconds / 60);
+  const secondsAmount = currentSeconds % 60;
+
+  const minutes = String(minutesAmount).padStart(2, "0");
+  const seconds = String(secondsAmount).padStart(2, "0");
 
   return (
     <main className="container max-w-[1024px] flex flex-col gap-8 px-6 pt-16 pb-8 mr-auto ml-auto ">
@@ -63,35 +98,37 @@ const Watch = () => {
               {...register("task")}
             />
             <datalist id="task-sugesstions">
-              <option value="Project 1" />
-              <option value="Project 3" />
-              <option value="Project banana" />
+              <option value="Study" />
+              <option value="Workout" />
+              <option value="Meditation" />
+              <option value="Morning Routine" />
             </datalist>
             <label htmlFor="minutesAmount">during</label>
             <input
               type="number"
               id="minutesAmount"
+              placeholder="00"
               max={90}
               step={5}
               min={5}
-              {...register("minutesAmount")}
+              {...register("minutesAmount", { valueAsNumber: true })}
               className=" bg-transparent w-16 border-b-[2px] border-gray-500 h-10 font-bold px-2 "
             />
             <span>minutes.</span>
           </div>
           <div className="w-full flex items-center justify-center lg:text-9xl text-5xl gap-3 ">
             <span className="bg-gray-500 text-neutral-950 p-4 rounded-xl">
-              0
+              {minutes[0]}
             </span>
             <span className="bg-gray-500 text-neutral-950  p-4 rounded-xl">
-              0
+              {minutes[1]}
             </span>
             <span className="text-green-500 ">:</span>
             <span className="bg-gray-500 text-neutral-950  p-4 rounded-xl">
-              0
+              {seconds[0]}
             </span>
             <span className="bg-gray-500 text-neutral-950 p-4 rounded-xl">
-              0
+              {seconds[1]}
             </span>
           </div>
           <button
