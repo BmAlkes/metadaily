@@ -58,7 +58,7 @@ const History = () => {
         </thead>
         <tbody id="body">
           {tasks.map((item, index) => (
-            <tr className={styles.tr}>
+            <tr className={styles.tr} key={item.task}>
               <td className={styles.tdLabel} data-label="Day">
                 {item.day}
               </td>
