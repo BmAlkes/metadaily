@@ -1,16 +1,18 @@
 "use client";
-import { PlayIcon } from "lucide-react";
+import { PlayIcon, StopCircle } from "lucide-react";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as zod from "zod";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { differenceInSeconds } from "date-fns";
+import { FaRegStopCircle } from "react-icons/fa";
 
 const newCycleSchema = zod.object({
   task: zod.string().min(1, "Inform the task"),
   minutesAmount: zod
     .number()
-    .min(5, "Cycle must need to be more than 5 minutes")
+    .min(1, "Cycle must need to be more than 5 minutes")
     .max(90, "Cycle must be less than 90 minutes"),
 });
 
@@ -24,6 +26,9 @@ interface Cycle {
   cicle: string;
   minutesAmount: number;
   day: string;
+  startDate: Date;
+  interruptDate?: Date;
+  finished?: Date;
 }
 const Watch = () => {
   const [cycle, setCycles] = useState<Cycle[]>([]);
@@ -37,6 +42,39 @@ const Watch = () => {
       minutesAmount: 0,
     },
   });
+  const activeCycles = cycle.find((cycle) => cycle.id === activeCycleId);
+  const totalSeconds = activeCycles ? activeCycles.minutesAmount * 60 : 0;
+
+  useEffect(() => {
+    let interval: any;
+    if (activeCycles) {
+      interval = setInterval(() => {
+        const secondsDifference = differenceInSeconds(
+          new Date(),
+          activeCycles.startDate
+        );
+
+        if (secondsDifference >= totalSeconds) {
+          setCycles((state) =>
+            state.map((cycle) => {
+              if (cycle.id === activeCycleId) {
+                return { ...cycle, interruptedDate: new Date() };
+              } else {
+                return cycle;
+              }
+            })
+          );
+          setAmountSecondsPassed(totalSeconds);
+          clearInterval(interval);
+        } else {
+          setAmountSecondsPassed(secondsDifference);
+        }
+      }, 1000);
+    }
+    return () => {
+      clearInterval(interval);
+    };
+  }, [activeCycles, totalSeconds, activeCycleId]);
 
   const handleCreateNewCycle = (data: NewCycleFormData) => {
     const date = new Date();
@@ -46,15 +84,27 @@ const Watch = () => {
       cicle: data.task,
       minutesAmount: data.minutesAmount,
       day: `${date.toLocaleDateString()}`,
+      startDate: date,
     };
     setCycles((state) => [...state, newCycle]);
     setActiveCycleId(id);
+    setAmountSecondsPassed(0);
     reset();
   };
 
-  const activeCycles = cycle.find((cycle) => cycle.id === activeCycleId);
+  const handleInterruptCycle = () => {
+    setCycles(
+      cycle.map((cycle) => {
+        if (cycle.id === activeCycleId) {
+          return { ...cycle, finishedDate: new Date() };
+        } else {
+          return cycle;
+        }
+      })
+    );
+    setActiveCycleId(null);
+  };
 
-  const totalSeconds = activeCycles ? activeCycles.minutesAmount * 60 : 0;
   const currentSeconds = activeCycles ? totalSeconds - amountSecondsPassed : 0;
 
   const minutesAmount = Math.floor(currentSeconds / 60);
@@ -62,6 +112,14 @@ const Watch = () => {
 
   const minutes = String(minutesAmount).padStart(2, "0");
   const seconds = String(secondsAmount).padStart(2, "0");
+
+  useEffect(() => {
+    if (activeCycles) {
+      document.title = `${minutes}: ${seconds}`;
+    }
+  }, [minutes, seconds, activeCycleId]);
+
+  console.log(cycle);
 
   return (
     <main className="container max-w-[1024px] flex flex-col gap-8 px-6 pt-16 pb-8 mr-auto ml-auto ">
@@ -96,6 +154,7 @@ const Watch = () => {
               placeholder="Type your project"
               list="task-sugesstions"
               {...register("task")}
+              disabled={!!activeCycles}
             />
             <datalist id="task-sugesstions">
               <option value="Study" />
@@ -109,8 +168,9 @@ const Watch = () => {
               id="minutesAmount"
               placeholder="00"
               max={90}
-              step={5}
-              min={5}
+              step={1}
+              min={1}
+              disabled={!!activeCycles}
               {...register("minutesAmount", { valueAsNumber: true })}
               className=" bg-transparent w-16 border-b-[2px] border-gray-500 h-10 font-bold px-2 "
             />
@@ -131,12 +191,22 @@ const Watch = () => {
               {seconds[1]}
             </span>
           </div>
-          <button
-            type="submit"
-            className="w-full  bottom-10  text-white bg-green-700 font-display font-regular text-2xl p-2 hover:bg-green-500 rounded-lg  flex items-center justify-center gap-3 "
-          >
-            <PlayIcon size={25} /> Start
-          </button>
+          {activeCycles ? (
+            <button
+              onClick={handleInterruptCycle}
+              type="button"
+              className="w-full  bottom-10  text-white bg-red-700 font-display font-regular text-2xl p-2 hover:bg-red-500 rounded-lg  flex items-center justify-center gap-3 "
+            >
+              <FaRegStopCircle size={25} /> Pause
+            </button>
+          ) : (
+            <button
+              type="submit"
+              className="w-full  bottom-10  text-white bg-green-700 font-display font-regular text-2xl p-2 hover:bg-green-500 rounded-lg  flex items-center justify-center gap-3 "
+            >
+              <PlayIcon size={25} /> Start
+            </button>
+          )}
         </form>
       </div>
     </main>
