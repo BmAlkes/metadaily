@@ -3,6 +3,8 @@ import { Dosis, Inter } from "next/font/google";
 import "./globals.css";
 import Header from "./components/header";
 import AuthProvider from "./components/AuthProvider";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const dosis = Dosis({ subsets: ["latin"], variable: "--font-dosis" });
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
@@ -20,6 +22,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${dosis.variable} ${inter.variable} bg-neutral-900`}>
+        <ToastContainer />
         <AuthProvider>
           <Header />
           {children}

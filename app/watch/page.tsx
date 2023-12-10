@@ -7,6 +7,7 @@ import * as zod from "zod";
 import React, { useEffect, useState } from "react";
 import { differenceInSeconds } from "date-fns";
 import { FaRegStopCircle } from "react-icons/fa";
+import { toast } from "react-toastify";
 
 const newCycleSchema = zod.object({
   task: zod.string().min(1, "Inform the task"),
@@ -58,7 +59,7 @@ const Watch = () => {
           setCycles((state) =>
             state.map((cycle) => {
               if (cycle.id === activeCycleId) {
-                return { ...cycle, interruptedDate: new Date() };
+                return { ...cycle, finishedDate: new Date() };
               } else {
                 return cycle;
               }
@@ -66,6 +67,7 @@ const Watch = () => {
           );
           setAmountSecondsPassed(totalSeconds);
           clearInterval(interval);
+          toast.success("Cycle Complete..");
         } else {
           setAmountSecondsPassed(secondsDifference);
         }
@@ -96,7 +98,7 @@ const Watch = () => {
     setCycles(
       cycle.map((cycle) => {
         if (cycle.id === activeCycleId) {
-          return { ...cycle, finishedDate: new Date() };
+          return { ...cycle, interruptDate: new Date() };
         } else {
           return cycle;
         }
@@ -150,7 +152,7 @@ const Watch = () => {
             <input
               type="text"
               id="task"
-              className=" bg-transparent border-b-[2px] border-gray-500 h-10 font-bold px-2 fle-1 placeholder:text-center focus:border-green-500 "
+              className=" bg-transparent border-b-[2px] border-gray-500 h-10 font-bold px-2 flex-1 placeholder:text-center focus:border-green-500 "
               placeholder="Type your project"
               list="task-sugesstions"
               {...register("task")}
